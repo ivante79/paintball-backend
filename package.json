@@ -4,7 +4,7 @@
   "description": "Paintball booking reservation system",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm run build",
+    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
     "install-client": "cd frontend && npm install",
     "install-server": "cd backend && npm install",
     "install-all": "concurrently \"npm run install-server\" \"npm run install-client\"",
