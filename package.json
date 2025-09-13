@@ -1,0 +1,33 @@
+{
+  "name": "paintball-reservations",
+  "version": "1.0.0",
+  "description": "Paintball booking reservation system",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "install-client": "cd frontend && npm install",
+    "install-server": "cd backend && npm install",
+    "install-all": "concurrently \"npm run install-server\" \"npm run install-client\"",
+    "dev-server": "cd backend && npm run dev",
+    "dev-client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
+    "start": "cd backend && npm start",
+    "heroku-postbuild": "npm run install-all && npm run build"
+  },
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
+  "keywords": [
+    "paintball",
+    "reservations",
+    "booking",
+    "react",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
