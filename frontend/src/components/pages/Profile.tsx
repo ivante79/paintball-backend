@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { bookingsAPI } from '../../services/api';
-import { Booking } from '../../types';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { bookingsAPI } from "../../services/api";
+import { Booking } from "../../types";
 
 const Profile: React.FC = () => {
   const { user, updateProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    phone: user?.phone || '',
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    phone: user?.phone || "",
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [bookingStats, setBookingStats] = useState({
     total: 0,
     confirmed: 0,
@@ -36,41 +36,44 @@ const Profile: React.FC = () => {
     try {
       const response = await bookingsAPI.getMyBookings();
       const bookings: Booking[] = response.data;
-      
-      const stats = bookings.reduce((acc, booking) => {
-        acc.total++;
-        acc[booking.status as keyof typeof acc]++;
-        return acc;
-      }, {
-        total: 0,
-        confirmed: 0,
-        pending: 0,
-        cancelled: 0,
-      });
-      
+
+      const stats = bookings.reduce(
+        (acc, booking) => {
+          acc.total++;
+          acc[booking.status as keyof typeof acc]++;
+          return acc;
+        },
+        {
+          total: 0,
+          confirmed: 0,
+          pending: 0,
+          cancelled: 0,
+        }
+      );
+
       setBookingStats(stats);
     } catch (error) {
-      console.error('Error fetching booking stats:', error);
+      console.error("Error fetching booking stats:", error);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
 
     try {
       await updateProfile(formData);
-      setMessage('Profil je uspješno ažuriran');
+      setMessage("Profil je uspješno ažuriran");
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message);
@@ -81,18 +84,18 @@ const Profile: React.FC = () => {
 
   const handleCancel = () => {
     setFormData({
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      phone: user?.phone || '',
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      phone: user?.phone || "",
     });
     setIsEditing(false);
-    setError('');
+    setError("");
   };
 
   const formatDate = (dateString?: string) => {
-    if (!dateString) return 'N/A';
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString('sr-RS');
+    return date.toLocaleDateString("sr-RS");
   };
 
   if (!user) {
@@ -175,8 +178,12 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="form-actions">
-                  <button type="submit" className="btn-primary" disabled={loading}>
-                    {loading ? 'Čuva se...' : 'Spremi izmjene'}
+                  <button
+                    type="submit"
+                    className="btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? "Čuva se..." : "Spremi izmjene"}
                   </button>
                   <button
                     type="button"
@@ -192,7 +199,9 @@ const Profile: React.FC = () => {
               <div className="profile-display">
                 <div className="info-row">
                   <span className="info-label">Ime i prezime:</span>
-                  <span>{user.firstName} {user.lastName}</span>
+                  <span>
+                    {user.firstName} {user.lastName}
+                  </span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Email:</span>
@@ -204,7 +213,9 @@ const Profile: React.FC = () => {
                 </div>
                 <div className="info-row">
                   <span className="info-label">Uloga:</span>
-                  <span className="user-role">{user.role === 'admin' ? 'Administrator' : 'Korisnik'}</span>
+                  <span className="user-role">
+                    {user.role === "admin" ? "Administrator" : "Korisnik"}
+                  </span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">Član od:</span>
@@ -242,8 +253,8 @@ const Profile: React.FC = () => {
           <div className="info-grid">
             <div className="info-card">
               <h3>📞 Kontakt</h3>
-              <p>Telefon: +381 11 123 4567</p>
-              <p>Email: info@paintballrezervacije.rs</p>
+              <p>Telefon: +385 99 123 4567</p>
+              <p>Email: info@paintballrezervacije.hr</p>
             </div>
             <div className="info-card">
               <h3>⏰ Radno vrijeme</h3>

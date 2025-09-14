@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { register } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Lozinke se ne podudaraju');
+      setError("Lozinke se ne podudaraju");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Lozinka mora imati minimum 6 karaktera');
+      setError("Lozinka mora imati minimum 6 karaktera");
       return;
     }
 
@@ -57,9 +57,9 @@ const Register: React.FC = () => {
           <h1>🎯 PaintBall Rezervacije</h1>
           <h2>Registrirajte se</h2>
         </div>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
@@ -111,7 +111,7 @@ const Register: React.FC = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="+381 60 123 4567"
+              placeholder="385 99 123 4567"
             />
           </div>
 
@@ -142,13 +142,13 @@ const Register: React.FC = () => {
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? 'Registriranje...' : 'Registrirajte se'}
+            {loading ? "Registriranje..." : "Registrirajte se"}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            Već imate račun?{' '}
+            Već imate račun?{" "}
             <Link to="/login" className="auth-link">
               Prijavite se
             </Link>

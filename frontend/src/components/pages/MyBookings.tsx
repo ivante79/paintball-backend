@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { bookingsAPI } from '../../services/api';
-import { socketService } from '../../services/socket';
-import { Booking } from '../../types';
+import React, { useState, useEffect } from "react";
+import { bookingsAPI } from "../../services/api";
+import { socketService } from "../../services/socket";
+import { Booking } from "../../types";
 
 const MyBookings: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [uploadingReceipt, setUploadingReceipt] = useState<number | null>(null);
 
   useEffect(() => {
@@ -54,37 +54,39 @@ const MyBookings: React.FC = () => {
       const response = await bookingsAPI.getMyBookings();
       setBookings(response.data);
     } catch (error: any) {
-      setError('Greška pri učitavanju rezervacija');
+      setError("Greška pri učitavanju rezervacija");
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancelBooking = async (id: number) => {
-    if (!window.confirm('Jeste li sigurni da želite otkazati rezervaciju?')) {
+    if (!window.confirm("Jeste li sigurni da želite otkazati rezervaciju?")) {
       return;
     }
 
     try {
       await bookingsAPI.cancelBooking(id.toString());
-      setMessage('Rezervacija je uspješno otkazana');
+      setMessage("Rezervacija je uspješno otkazana");
       fetchBookings();
     } catch (error: any) {
-      setError(error.response?.data?.message || 'Greška pri otkazivanju rezervacije');
+      setError(
+        error.response?.data?.message || "Greška pri otkazivanju rezervacije"
+      );
     }
   };
 
   const handleReceiptUpload = async (bookingId: number, file: File) => {
     setUploadingReceipt(bookingId);
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
 
     try {
       await bookingsAPI.uploadReceipt(bookingId.toString(), file);
-      setMessage('Potvrda o plaćanju je uspješno otpremljena');
+      setMessage("Potvrda o plaćanju je uspješno poslana");
       fetchBookings();
     } catch (error: any) {
-      setError(error.response?.data?.message || 'Greška pri otpremanju potvrde');
+      setError(error.response?.data?.message || "Greška pri slanju potvrde");
     } finally {
       setUploadingReceipt(null);
     }
@@ -92,24 +94,32 @@ const MyBookings: React.FC = () => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('sr-RS');
+    return date.toLocaleDateString("hr-HR");
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmed': return 'status-confirmed';
-      case 'pending': return 'status-pending';
-      case 'cancelled': return 'status-cancelled';
-      default: return 'status-pending';
+      case "confirmed":
+        return "status-confirmed";
+      case "pending":
+        return "status-pending";
+      case "cancelled":
+        return "status-cancelled";
+      default:
+        return "status-pending";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'confirmed': return 'Potvrđeno';
-      case 'pending': return 'Na čekanju';
-      case 'cancelled': return 'Otkazano';
-      default: return status;
+      case "confirmed":
+        return "Potvrđeno";
+      case "pending":
+        return "Na čekanju";
+      case "cancelled":
+        return "Otkazano";
+      default:
+        return status;
     }
   };
 
@@ -129,16 +139,22 @@ const MyBookings: React.FC = () => {
       {bookings.length === 0 ? (
         <div className="no-bookings">
           <p>Nemate aktivnih rezervacija.</p>
-          <a href="/" className="btn-primary">Rezervirajte termin</a>
+          <a href="/" className="btn-primary">
+            Rezervirajte termin
+          </a>
         </div>
       ) : (
         <div className="bookings-list">
-          {bookings.map(booking => (
+          {bookings.map((booking) => (
             <div key={booking.id} className="booking-card">
               <div className="booking-header">
                 <div className="booking-info">
                   <h3>Rezervacija #{booking.id}</h3>
-                  <span className={`booking-status ${getStatusColor(booking.status)}`}>
+                  <span
+                    className={`booking-status ${getStatusColor(
+                      booking.status
+                    )}`}
+                  >
                     {getStatusText(booking.status)}
                   </span>
                 </div>
@@ -154,11 +170,17 @@ const MyBookings: React.FC = () => {
                 </div>
                 <div className="detail-row">
                   <span className="detail-label">🎯 Oprema:</span>
-                  <span>{booking.equipment === 'included' ? 'Uključena' : 'Vlastita'}</span>
+                  <span>
+                    {booking.equipment === "included"
+                      ? "Uključena"
+                      : "Vlastita"}
+                  </span>
                 </div>
                 <div className="detail-row">
-                  <span className="detail-label">💰 Ukupna cena:</span>
-                  <span><strong>{booking.total_price} RSD</strong></span>
+                  <span className="detail-label">💰 Ukupna cijena:</span>
+                  <span>
+                    <strong>{booking.total_price} EUR</strong>
+                  </span>
                 </div>
                 <div className="detail-row">
                   <span className="detail-label">📅 Kreirana:</span>
@@ -167,16 +189,14 @@ const MyBookings: React.FC = () => {
               </div>
 
               <div className="booking-actions">
-                {booking.status === 'pending' && (
+                {booking.status === "pending" && (
                   <>
                     {!booking.payment_receipt && (
                       <div className="receipt-upload">
                         <label className="upload-btn">
-                          {uploadingReceipt === booking.id ? (
-                            'Šalje se...'
-                          ) : (
-                            '📎 Pošalji potvrdu o plaćanju'
-                          )}
+                          {uploadingReceipt === booking.id
+                            ? "Šalje se..."
+                            : "📎 Pošaljite potvrdu o plaćanju"}
                           <input
                             type="file"
                             accept="image/*"
@@ -187,12 +207,12 @@ const MyBookings: React.FC = () => {
                               }
                             }}
                             disabled={uploadingReceipt === booking.id}
-                            style={{ display: 'none' }}
+                            style={{ display: "none" }}
                           />
                         </label>
                       </div>
                     )}
-                    
+
                     {booking.payment_receipt && (
                       <div className="receipt-status">
                         ✅ Potvrda o plaćanju je poslana
@@ -208,7 +228,7 @@ const MyBookings: React.FC = () => {
                   </>
                 )}
 
-                {booking.status === 'confirmed' && (
+                {booking.status === "confirmed" && (
                   <div className="confirmed-info">
                     <span className="confirmed-text">
                       ✅ Rezervacija je potvrđena! Vidimo se na terenu.
@@ -216,7 +236,7 @@ const MyBookings: React.FC = () => {
                   </div>
                 )}
 
-                {booking.status === 'cancelled' && (
+                {booking.status === "cancelled" && (
                   <div className="cancelled-info">
                     <span className="cancelled-text">
                       ❌ Rezervacija je otkazana

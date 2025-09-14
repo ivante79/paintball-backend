@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { weatherAPI, bookingsAPI } from '../../services/api';
-import { socketService } from '../../services/socket';
-import { Weather, BookingFormData } from '../../types';
+import React, { useState, useEffect } from "react";
+import { weatherAPI, bookingsAPI } from "../../services/api";
+import { socketService } from "../../services/socket";
+import { Weather, BookingFormData } from "../../types";
 
 const Homepage: React.FC = () => {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [formData, setFormData] = useState<BookingFormData>({
-    bookingDate: '',
-    timeSlot: '',
+    bookingDate: "",
+    timeSlot: "",
     numberOfPlayers: 6,
-    equipment: 'included',
+    equipment: "included",
   });
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const timeSlots = [
-    '09:00-11:00',
-    '11:30-13:30',
-    '14:00-16:00',
-    '16:30-18:30',
-    '19:00-21:00'
+    "09:00-11:00",
+    "11:30-13:30",
+    "14:00-16:00",
+    "16:30-18:30",
+    "19:00-21:00",
   ];
 
   useEffect(() => {
@@ -39,42 +39,46 @@ const Homepage: React.FC = () => {
       const response = await weatherAPI.getCurrentWeather();
       setWeather(response.data.weather);
     } catch (error) {
-      console.error('Error fetching weather:', error);
+      console.error("Error fetching weather:", error);
     }
   };
 
   const fetchAvailableSlots = async () => {
     try {
-      const response = await bookingsAPI.getAvailableSlots(formData.bookingDate);
+      const response = await bookingsAPI.getAvailableSlots(
+        formData.bookingDate
+      );
       setAvailableSlots(response.data.availableSlots);
     } catch (error) {
-      console.error('Error fetching available slots:', error);
+      console.error("Error fetching available slots:", error);
       setAvailableSlots(timeSlots);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'numberOfPlayers' ? parseInt(value) : value
+      [name]: name === "numberOfPlayers" ? parseInt(value) : value,
     }));
   };
 
   const calculatePrice = () => {
-    const basePrice = 1500; // RSD per person for 2 hours
-    const equipmentFee = formData.equipment === 'included' ? 500 : 0; // RSD per person
+    const basePrice = 15;
+    const equipmentFee = formData.equipment === "included" ? 5 : 0;
     return (basePrice + equipmentFee) * formData.numberOfPlayers;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     setLoading(true);
 
     if (!formData.timeSlot) {
-      setError('Molimo odaberite vremenski termin');
+      setError("Molimo odaberite vremenski termin");
       setLoading(false);
       return;
     }
@@ -82,20 +86,22 @@ const Homepage: React.FC = () => {
     try {
       const bookingData = {
         ...formData,
-        totalPrice: calculatePrice()
+        totalPrice: calculatePrice(),
       };
 
       await bookingsAPI.createBooking(bookingData);
-      setMessage('Rezervacija je uspješno kreirana!');
+      setMessage("Rezervacija je uspješno kreirana!");
       setFormData({
-        bookingDate: '',
-        timeSlot: '',
+        bookingDate: "",
+        timeSlot: "",
         numberOfPlayers: 6,
-        equipment: 'included',
+        equipment: "included",
       });
       setAvailableSlots([]);
     } catch (error: any) {
-      setError(error.response?.data?.message || 'Greška pri kreiranju rezervacije');
+      setError(
+        error.response?.data?.message || "Greška pri kreiranju rezervacije"
+      );
     } finally {
       setLoading(false);
     }
@@ -103,7 +109,7 @@ const Homepage: React.FC = () => {
 
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    return today.toISOString().split("T")[0];
   };
 
   return (
@@ -119,8 +125,8 @@ const Homepage: React.FC = () => {
           {weather ? (
             <div className="weather-info">
               <div className="weather-main">
-                <img 
-                  src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} 
+                <img
+                  src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
                   alt={weather.description}
                   className="weather-icon"
                 />
@@ -130,7 +136,7 @@ const Homepage: React.FC = () => {
                 <p className="weather-desc">{weather.description}</p>
                 <div className="weather-stats">
                   <span>💧 Vlažnost: {weather.humidity}%</span>
-                  <span>💨 Vetar: {weather.windSpeed} km/h</span>
+                  <span>💨 Vjetar: {weather.windSpeed} km/h</span>
                 </div>
               </div>
             </div>
@@ -141,7 +147,7 @@ const Homepage: React.FC = () => {
 
         <div className="booking-form">
           <h2>📅 Rezervirajte termin</h2>
-          
+
           {message && <div className="success-message">{message}</div>}
           {error && <div className="error-message">{error}</div>}
 
@@ -170,12 +176,16 @@ const Homepage: React.FC = () => {
                   required
                 >
                   <option value="">Odaberite termin</option>
-                  {availableSlots.map(slot => (
-                    <option key={slot} value={slot}>{slot}</option>
+                  {availableSlots.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
                   ))}
                 </select>
                 {availableSlots.length === 0 && (
-                  <p className="no-slots">Nema dostupnih termina za odabrani datum</p>
+                  <p className="no-slots">
+                    Nema dostupnih termina za odabrani datum
+                  </p>
                 )}
               </div>
             )}
@@ -204,22 +214,27 @@ const Homepage: React.FC = () => {
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="included">Uključena (+500 RSD/osoba)</option>
-                  <option value="own">Sopstvena oprema</option>
+                  <option value="included">Uključena (+5 EUR/osoba)</option>
+                  <option value="own">Vlastita oprema</option>
                 </select>
               </div>
             </div>
 
             <div className="price-display">
-              <strong>Ukupna cena: {calculatePrice()} RSD</strong>
+              <strong>Ukupna cijena: {calculatePrice()} EUR</strong>
               <small>
-                Osnovna cena: 1500 RSD po osobi (2 sata)
-                {formData.equipment === 'included' && ' + 500 RSD oprema po osobi'}
+                Osnovna cijena: 15 EUR po osobi (2 sata)
+                {formData.equipment === "included" &&
+                  " + 5 EUR oprema po osobi"}
               </small>
             </div>
 
-            <button type="submit" className="booking-btn" disabled={loading || availableSlots.length === 0}>
-              {loading ? 'Rezervira se...' : 'Rezerviraj termin'}
+            <button
+              type="submit"
+              className="booking-btn"
+              disabled={loading || availableSlots.length === 0}
+            >
+              {loading ? "Rezervira se..." : "Rezerviraj termin"}
             </button>
           </form>
         </div>
