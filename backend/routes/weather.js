@@ -6,9 +6,9 @@ const router = express.Router();
 // Get current weather
 router.get("/current", async (req, res) => {
   try {
-    const { city = "Osijek" } = req.query;
+    const { city = "Zagreb" } = req.query;
     const apiKey = process.env.WEATHER_API_KEY;
-
+    console.log("apikey", apiKey);
     if (!apiKey) {
       return res.status(500).json({
         message: "Weather API key not configured",
@@ -25,7 +25,7 @@ router.get("/current", async (req, res) => {
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     );
-
+    console.log(response.data, "weather api response");
     const weatherData = {
       temperature: Math.round(response.data.main.temp),
       description: response.data.weather[0].description,
@@ -47,7 +47,7 @@ router.get("/current", async (req, res) => {
         icon: "01d",
         humidity: 60,
         windSpeed: 5,
-        city: "Osijek",
+        city: "Zagreb",
       },
       message: "Using mock weather data",
     });
@@ -57,7 +57,7 @@ router.get("/current", async (req, res) => {
 // Get weather forecast for next 5 days
 router.get("/forecast", async (req, res) => {
   try {
-    const { city = "Osijek" } = req.query;
+    const { city = "Zagreb" } = req.query;
     const apiKey = process.env.WEATHER_API_KEY;
 
     if (!apiKey) {

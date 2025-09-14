@@ -263,8 +263,8 @@ const Profile: React.FC = () => {
             </div>
             <div className="info-card">
               <h3>📍 Lokacija</h3>
-              <p>Paintball centar Osijek</p>
-              <p>Osijek, Retfala</p>
+              <p>Paintball centar Zagreb</p>
+              <p>Zagreb, Dubrava</p>
             </div>
           </div>
         </div>

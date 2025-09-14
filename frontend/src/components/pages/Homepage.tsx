@@ -240,6 +240,28 @@ const Homepage: React.FC = () => {
         </div>
       </div>
 
+      <div className="gallery-section">
+        <h2>Naš paintball centar</h2>
+        <div className="gallery-grid">
+          <div className="gallery-item">
+            <img src="/images/paintball-field.jpg" alt="Paintball teren" />
+            <div className="gallery-caption">Profesionalni teren</div>
+          </div>
+          <div className="gallery-item">
+            <img src="/images/paintball-equipment.jpg" alt="Paintball oprema" />
+            <div className="gallery-caption">Kvalitetna oprema</div>
+          </div>
+          <div className="gallery-item">
+            <img src="/images/paintball-action.jpg" alt="Paintball akcija" />
+            <div className="gallery-caption">Adrenalin i zabava</div>
+          </div>
+          <div className="gallery-item">
+            <img src="/images/paintball-team.jpg" alt="Paintball tim" />
+            <div className="gallery-caption">Timska igra</div>
+          </div>
+        </div>
+      </div>
+
       <div className="info-section">
         <div className="facility-info">
           <h3>ℹ️ O objektu</h3>

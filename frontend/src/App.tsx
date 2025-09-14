@@ -1,19 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Navigation from './components/common/Navigation';
-import Homepage from './components/pages/Homepage';
-import MyBookings from './components/pages/MyBookings';
-import Profile from './components/pages/Profile';
-import Login from './components/pages/Login';
-import Register from './components/pages/Register';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Navigation from "./components/common/Navigation";
+import Homepage from "./components/pages/Homepage";
+import MyBookings from "./components/pages/MyBookings";
+import Profile from "./components/pages/Profile";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
+import "./App.css";
 
-const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading">Učitavanje...</div>;
   }
 
   return user ? <>{children}</> : <Navigate to="/login" />;
@@ -23,7 +30,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading">Učitavanje...</div>;
   }
 
   return !user ? <>{children}</> : <Navigate to="/" />;

@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -8,7 +9,7 @@ const api = axios.create({
 
 // Add auth token to requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,54 +24,55 @@ export const authAPI = {
     firstName: string;
     lastName: string;
     phone: string;
-  }) => api.post('/auth/register', userData),
-  
+  }) => api.post("/auth/register", userData),
+
   login: (credentials: { email: string; password: string }) =>
-    api.post('/auth/login', credentials),
-  
-  getCurrentUser: () => api.get('/auth/me'),
-  
+    api.post("/auth/login", credentials),
+
+  getCurrentUser: () => api.get("/auth/me"),
+
   updateProfile: (userData: {
     firstName: string;
     lastName: string;
     phone: string;
-  }) => api.put('/auth/profile', userData),
+  }) => api.put("/auth/profile", userData),
 };
 
 // Bookings API
 export const bookingsAPI = {
-  getMyBookings: () => api.get('/bookings'),
-  
-  getAllBookings: () => api.get('/bookings/all'),
-  
+  getMyBookings: () => api.get("/bookings"),
+
+  getAllBookings: () => api.get("/bookings/all"),
+
   createBooking: (bookingData: {
     bookingDate: string;
     timeSlot: string;
     numberOfPlayers: number;
     equipment: string;
     totalPrice: number;
-  }) => api.post('/bookings', bookingData),
-  
+  }) => api.post("/bookings", bookingData),
+
   getBooking: (id: string) => api.get(`/bookings/${id}`),
-  
+
   updateBooking: (id: string, bookingData: any) =>
     api.put(`/bookings/${id}`, bookingData),
-  
+
   cancelBooking: (id: string) => api.delete(`/bookings/${id}`),
-  
+
   uploadReceipt: (id: string, file: File) => {
     const formData = new FormData();
-    formData.append('receipt', file);
+    formData.append("receipt", file);
+    console.log("Uploading receipt for booking ID:", id);
     return api.post(`/bookings/${id}/receipt`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
   },
-  
+
   updateBookingStatus: (id: string, status: string) =>
     api.put(`/bookings/${id}/status`, { status }),
-  
+
   getAvailableSlots: (date: string) =>
     api.get(`/bookings/availability/${date}`),
 };
@@ -78,10 +80,10 @@ export const bookingsAPI = {
 // Weather API
 export const weatherAPI = {
   getCurrentWeather: (city?: string) =>
-    api.get(`/weather/current${city ? `?city=${city}` : ''}`),
-  
+    api.get(`/weather/current${city ? `?city=${city}` : ""}`),
+
   getForecast: (city?: string) =>
-    api.get(`/weather/forecast${city ? `?city=${city}` : ''}`),
+    api.get(`/weather/forecast${city ? `?city=${city}` : ""}`),
 };
 
 export default api;
