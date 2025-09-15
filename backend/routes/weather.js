@@ -6,7 +6,7 @@ const router = express.Router();
 // Get current weather
 router.get("/current", async (req, res) => {
   try {
-    const { city = "Zagreb" } = req.query;
+    const { city = "Osijek" } = req.query;
     const apiKey = process.env.WEATHER_API_KEY;
     console.log("apikey", apiKey);
     if (!apiKey) {
@@ -47,7 +47,7 @@ router.get("/current", async (req, res) => {
         icon: "01d",
         humidity: 60,
         windSpeed: 5,
-        city: "Zagreb",
+        city: "Osijek",
       },
       message: "Using mock weather data",
     });
@@ -57,7 +57,7 @@ router.get("/current", async (req, res) => {
 // Get weather forecast for next 5 days
 router.get("/forecast", async (req, res) => {
   try {
-    const { city = "Zagreb" } = req.query;
+    const { city = "Osijek" } = req.query;
     const apiKey = process.env.WEATHER_API_KEY;
 
     if (!apiKey) {

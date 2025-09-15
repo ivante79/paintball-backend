@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Navigation: React.FC = () => {
   const { user, logout } = useAuth();
@@ -8,7 +8,7 @@ const Navigation: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   if (!user) {
@@ -19,9 +19,9 @@ const Navigation: React.FC = () => {
     <nav className="navigation">
       <div className="nav-container">
         <Link to="/" className="nav-brand">
-          🎯 PaintBall Rezervacije
+          PaintBall Faks
         </Link>
-        
+
         <div className="nav-links">
           <Link to="/" className="nav-link">
             Početna

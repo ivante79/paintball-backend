@@ -115,7 +115,7 @@ const Homepage: React.FC = () => {
   return (
     <div className="homepage">
       <div className="hero-section">
-        <h1>🎯 Dobrodošli u PaintBall Rezervacije</h1>
+        <h1>Dobrodošli u PaintBall Faks</h1>
         <p>Rezervirajte svoj termin za nezaboravnu paintball avanturu!</p>
       </div>
 
@@ -264,7 +264,7 @@ const Homepage: React.FC = () => {
 
       <div className="info-section">
         <div className="facility-info">
-          <h3>ℹ️ O objektu</h3>
+          <h3>ℹ️ O nama</h3>
           <ul>
             <li>🏟️ Teren od 2000m² sa prirodnim preprekama</li>
             <li>🎯 Profesionalna paintball oprema</li>
@@ -277,7 +277,7 @@ const Homepage: React.FC = () => {
         <div className="rules-info">
           <h3>📋 Pravila</h3>
           <ul>
-            <li>🔞 Minimum 12 godina starosti</li>
+            <li>🔞 Minimum 12 godina</li>
             <li>👥 Minimum 6 igrača po rezervaciji</li>
             <li>⏰ Dolazak 30 minuta prije termina</li>
             <li>💳 Plaćanje unaprijed ili na licu mjesta</li>
