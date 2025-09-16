@@ -4,7 +4,7 @@ export interface User {
   firstName: string;
   lastName: string;
   phone: string;
-  role: 'customer' | 'admin';
+  role: "customer" | "admin";
   createdAt?: string;
 }
 
@@ -14,10 +14,10 @@ export interface Booking {
   booking_date: string;
   time_slot: string;
   number_of_players: number;
-  equipment: 'included' | 'own';
+  equipment: "included" | "own";
   total_price: number;
   payment_receipt?: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  status: "pending" | "confirmed" | "cancelled";
   created_at: string;
   first_name?: string;
   last_name?: string;
@@ -62,5 +62,5 @@ export interface BookingFormData {
   bookingDate: string;
   timeSlot: string;
   numberOfPlayers: number;
-  equipment: 'included' | 'own';
+  equipment: "included" | "own";
 }

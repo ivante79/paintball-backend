@@ -266,11 +266,10 @@ const Homepage: React.FC = () => {
         <div className="facility-info">
           <h3>ℹ️ O nama</h3>
           <ul>
-            <li>🏟️ Teren od 2000m² sa prirodnim preprekama</li>
+            <li>🏟️ Teren od 2000m²</li>
             <li>🎯 Profesionalna paintball oprema</li>
             <li>👨‍🏫 Iskusni instruktori</li>
             <li>🚗 Besplatno parkiranje</li>
-            <li>☕ Restoran i kafić na licu mjesta</li>
           </ul>
         </div>
 
@@ -281,7 +280,6 @@ const Homepage: React.FC = () => {
             <li>👥 Minimum 6 igrača po rezervaciji</li>
             <li>⏰ Dolazak 30 minuta prije termina</li>
             <li>💳 Plaćanje unaprijed ili na licu mjesta</li>
-            <li>🚫 Alkohol i psihoaktivne supstance su zabranjeni</li>
           </ul>
         </div>
       </div>
