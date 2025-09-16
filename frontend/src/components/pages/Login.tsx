@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
@@ -38,12 +38,12 @@ const Login: React.FC = () => {
     <div className="auth-container">
       <div className="auth-form">
         <div className="auth-header">
-          <h1>🎯 PaintBall Rezervacije</h1>
+          <h1>PaintBall Faks</h1>
           <h2>Prijavite se</h2>
         </div>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
@@ -72,13 +72,13 @@ const Login: React.FC = () => {
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? 'Prijavljujem...' : 'Prijavite se'}
+            {loading ? "Prijavljujem..." : "Prijavite se"}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            Nemate račun?{' '}
+            Nemate račun?{" "}
             <Link to="/register" className="auth-link">
               Registrirajte se
             </Link>

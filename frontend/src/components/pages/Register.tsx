@@ -54,7 +54,7 @@ const Register: React.FC = () => {
     <div className="auth-container">
       <div className="auth-form">
         <div className="auth-header">
-          <h1>🎯 PaintBall Rezervacije</h1>
+          <h1>PaintBall Faks</h1>
           <h2>Registrirajte se</h2>
         </div>
 
